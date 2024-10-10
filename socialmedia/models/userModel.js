@@ -15,6 +15,22 @@ const createTable = () => {
     }
     console.log('Tabela "usuarios" criada com sucesso!')
   })
+
+  const criarPost = `
+    CREATE TABLE IF NOT EXISTS posts (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      post VARCHAR(700) NOT NULL,
+      userid INT,
+      FOREIGN KEY (userid) REFERENCES usuarios(id)
+    )
+  `
+  db.query(criarPost, (err, result) => {
+    if (err) {
+      console.error('Erro ao criar tabela:', err)
+      return
+    }
+    console.log('Tabela "posts" criada com sucesso!')
+  })
 }
 
 const getUsers = (callback) => {
@@ -32,4 +48,19 @@ const findUserByName = (nome, callback) => {
   db.query(query, callback)
 }
 
-module.exports = { createTable, getUsers, insertUser, findUserByName }
+const getPosts = (callback) => {
+  const query = 'SELECT id, post FROM posts'
+  db.query(query, callback)
+}
+
+const insertPosts = (posts, callback) => {
+  const query = 'INSER INTO posts (post) VALUE (?, ?)'
+  db.query(query, [posts.post], callback)
+}
+
+const findeUserByPosts = (posts, callback) => {
+  const query = `SELECT * FROM posts WHERE post ='${posts}'`
+  db.query(query, callback)
+}
+
+module.exports = { createTable, getUsers, insertUser, findUserByName, getPosts, insertPosts, findeUserByPosts }

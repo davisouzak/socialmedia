@@ -10,5 +10,6 @@ router.get('/', (req, res) => {
 router.get('/usuarios', userController.getUsers)
 router.post('/login', userController.loginUser)
 router.post('/usuarios', userController.createUser)
+router.get('/posts',)
 
 module.exports = router
