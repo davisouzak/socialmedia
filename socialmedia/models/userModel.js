@@ -54,8 +54,9 @@ const getPosts = (callback) => {
 }
 
 const insertPosts = (posts, callback) => {
-  const query = 'INSER INTO posts (post) VALUE (?, ?)'
-  db.query(query, [posts.post], callback)
+  console.log(posts)
+  const query = 'INSERT INTO posts (post, id) VALUE (?, ?)'
+  db.query(query, [posts.nome], callback)
 }
 
 const findeUserByPosts = (posts, callback) => {

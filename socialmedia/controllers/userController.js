@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 const userModel = require('../models/userModel')
+const userRoutes = require('../routes/userRoutes')
 
 const getUsers = (req, res) => {
   userModel.getUsers((err, results) => {
@@ -12,17 +13,17 @@ const getUsers = (req, res) => {
 }
 
 const loginUser = (req, res) => {
-  const user = req.body
+  const user = req.body 
 
   userModel.findUserByName(user.nome, (err, result) => {
     if (err) return res.status(500).send({ message: "Something went wrong", err })
-
+    
     if (result.length === 0) return res.status(404).send({ message: "User not found" })
 
     if (result[0].senha !== user.senha) return res.status(401).send({ message: "Wrong password." })
 
     const token = jwt.sign({ nome: user.nome }, process.env.TOKEN_KEY)
-    return res.status(200).send({ message: "User successfully Logged in", token: token })
+    res.redirect('/posts')
   })
 }
 
