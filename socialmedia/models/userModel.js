@@ -44,8 +44,8 @@ const insertUser = (user, callback) => {
 }
 
 const findUserByName = (nome, callback) => {
-  const query = `SELECT * FROM usuarios WHERE nome='${nome}'`
-  db.query(query, callback)
+  const query = 'SELECT * FROM usuarios WHERE nome = ?'
+  db.query(query, [nome], callback) 
 }
 
 const getPosts = (callback) => {
@@ -53,15 +53,14 @@ const getPosts = (callback) => {
   db.query(query, callback)
 }
 
-const insertPosts = (posts, callback) => {
-  console.log(posts)
-  const query = 'INSERT INTO posts (post, id) VALUE (?, ?)'
-  db.query(query, [posts.nome], callback)
+const insertPosts = (postContent, callback) => {
+  const query = 'INSERT INTO posts (post, userid) VALUES (?, ?)'
+  db.query(query, [postContent.post, postContent.userid], callback)
 }
 
-const findeUserByPosts = (posts, callback) => {
-  const query = `SELECT * FROM posts WHERE post ='${posts}'`
-  db.query(query, callback)
+const findUserByPosts = (posts, callback) => {
+  const query = 'SELECT * FROM posts WHERE post = ?'
+  db.query(query, [posts], callback) 
 }
 
-module.exports = { createTable, getUsers, insertUser, findUserByName, getPosts, insertPosts, findeUserByPosts }
+module.exports = { createTable, getUsers, insertUser, findUserByName, getPosts, insertPosts, findUserByPosts };
