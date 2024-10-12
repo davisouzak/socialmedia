@@ -14,5 +14,7 @@ router.post('/login', userController.loginUser)
 router.post('/usuarios', userController.createUser)
 router.get('/posts', checkAuth, postsController.getPosts)
 router.post('/posts',checkAuth, postsController.createPost)
+router.get('/posts/:id', postsController.getPostById)
+router.delete('/posts/:id', postsController.deletePostById)
 
 module.exports = router

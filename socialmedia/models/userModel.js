@@ -63,4 +63,29 @@ const findUserByPosts = (posts, callback) => {
   db.query(query, [posts], callback) 
 }
 
-module.exports = { createTable, getUsers, insertUser, findUserByName, getPosts, insertPosts, findUserByPosts };
+const deletePosts = (postId, callback) => {
+  const query = 'DELETE FROM posts WHERE id = ?'
+  db.query(query, [postId], (err, result) => {
+    if (err) {
+      console.error('Erro ao deletar post:', err)
+      callback(err, null)
+      return
+    }
+    console.log(`Post com id ${postId} deletado com sucesso`)
+    callback(null, result)
+  })
+}
+
+const getPostById = (postId, callback) => {
+  const query = 'SELECT * FROM posts WHERE id = ?'
+  db.query(query, [postId], (err, result) => {
+    if (err) {
+      console.error('Erro ao encontrar post', err)
+      callback(err, null)
+      result
+    }
+    callback(null, result)
+  })
+}
+
+module.exports = { createTable, getUsers, insertUser, findUserByName, getPosts, insertPosts, findUserByPosts, deletePosts, getPostById };
