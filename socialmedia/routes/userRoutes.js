@@ -6,15 +6,16 @@ const router = express.Router()
 const checkAuth = require('../middleware/checkAuth')
 
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/index.html'))
+	res.sendFile(path.join(__dirname, '../views/index.html'))
 })
 
 router.get('/usuarios', userController.getUsers)
 router.post('/login', userController.loginUser)
 router.post('/usuarios', userController.createUser)
 router.get('/posts', checkAuth, postsController.getPosts)
-router.post('/posts',checkAuth, postsController.createPost)
+router.post('/posts', checkAuth, postsController.createPost)
 router.get('/posts/:id', postsController.getPostById)
 router.delete('/posts/:id', postsController.deletePostById)
+router.get('/allposts', postsController.getAllPostsWithUsers)
 
 module.exports = router
